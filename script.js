@@ -1,51 +1,28 @@
-const books = [
-    { 
-        name: "AP Biology", 
-        condition: "Like New", 
-        originalPrice: "$25", 
-        salePrice: "$20", 
-        notes: "Minimal highlighting", 
-        imageUrl: "https://m.media-amazon.com/images/I/81vE+QldfxL._AC_UF1000,1000_QL80_.jpg" 
-    },
-    { 
-        name: "SAT Prep", 
-        condition: "Good", 
-        originalPrice: "$20", 
-        salePrice: "$15", 
-        notes: "Some wear on the cover", 
-        imageUrl: "https://images.penguinrandomhouse.com/cover/9780593516898" 
-    },
-    { 
-        name: "ACT Prep", 
-        condition: "Fair", 
-        originalPrice: "$15", 
-        salePrice: "$10", 
-        notes: "Several marked pages", 
-        imageUrl: "https://m.media-amazon.com/images/I/41+5ieIdQ4L._SX329_BO1,204,203,200_.jpg" 
-    },
-    { 
-        name: "GRE Prep", 
-        condition: "Like New", 
-        originalPrice: "$30", 
-        salePrice: "$25", 
-        notes: "Almost new", 
-        imageUrl: "https://m.media-amazon.com/images/I/41GPOqD3qYL._SX348_BO1,204,203,200_.jpg" 
-    },
-    { 
-        name: "MCAT Prep", 
-        condition: "Good", 
-        originalPrice: "$35", 
-        salePrice: "$30", 
-        notes: "A few notes in margins", 
-        imageUrl: "https://m.media-amazon.com/images/I/41VWfbBQuLL._SX331_BO1,204,203,200_.jpg" 
-    },
-];
+const sheetUrl = 'https://spreadsheets.google.com/feeds/list/2PACX-1vQ4Y7JH6r-lo684eRID35zd6PBOw_IRT7KMSt1lkki0i5ZirBIJqtsiY9SuxWjMHEOnK3qGBnCLaIYA/od6/public/values?alt=json';
 
-function displayBooks(filteredBooks = books) {
+async function fetchBooks() {
+    try {
+        const response = await fetch(sheetUrl);
+        const data = await response.json();
+        const books = data.feed.entry.map(entry => ({
+            name: entry.gsx$name.$t,
+            condition: entry.gsx$condition.$t,
+            originalPrice: entry.gsx$originalprice.$t,
+            salePrice: entry.gsx$saleprice.$t,
+            notes: entry.gsx$notes.$t,
+            imageUrl: entry.gsx$imageurl.$t
+        }));
+        displayBooks(books);
+    } catch (error) {
+        console.error('Error fetching books:', error);
+    }
+}
+
+function displayBooks(books) {
     const marketplace = document.getElementById('marketplace');
     marketplace.innerHTML = ''; // Clear the marketplace
 
-    filteredBooks.forEach(book => {
+    books.forEach(book => {
         const bookCard = document.createElement('div');
         bookCard.className = 'card';
 
@@ -99,13 +76,13 @@ function showModal(book) {
     };
 }
 
-function searchBooks() {
+function searchBooks(books) {
     const searchBar = document.getElementById('search-bar');
     const searchQuery = searchBar.value.toLowerCase();
     const filteredBooks = books.filter(book => book.name.toLowerCase().includes(searchQuery));
     displayBooks(filteredBooks);
 }
 
-document.getElementById('search-bar').addEventListener('input', searchBooks);
+document.getElementById('search-bar').addEventListener('input', () => searchBooks(books));
 
-document.addEventListener('DOMContentLoaded', () => displayBooks(books));
+document.addEventListener('DOMContentLoaded', fetchBooks);
