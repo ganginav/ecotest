@@ -5,7 +5,7 @@ const books = [
         originalPrice: "$25", 
         salePrice: "$20", 
         notes: "Minimal highlighting", 
-        imageUrl: "https://m.media-amazon.com/images/I/41FSv-7pVSL._SX404_BO1,204,203,200_.jpg" 
+        imageUrl: "https://m.media-amazon.com/images/I/81vE+QldfxL._AC_UF1000,1000_QL80_.jpg" 
     },
     { 
         name: "SAT Prep", 
