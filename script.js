@@ -13,7 +13,7 @@ const books = [
         originalPrice: "$20", 
         salePrice: "$15", 
         notes: "Some wear on the cover", 
-        imageUrl: "https://m.media-amazon.com/images/I/51MyxynfSvL._SX379_BO1,204,203,200_.jpg" 
+        imageUrl: "https://images.penguinrandomhouse.com/cover/9780593516898" 
     },
     { 
         name: "ACT Prep", 
