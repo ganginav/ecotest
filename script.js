@@ -85,4 +85,27 @@ function showModal(book) {
     document.getElementById('modal-sale-price').textContent = book.salePrice;
     document.getElementById('modal-notes').textContent = `Notes: ${book.notes}`;
 
-   
+    modal.style.display = "block";
+
+    const closeModal = document.querySelector('.close');
+    closeModal.onclick = () => {
+        modal.style.display = "none";
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+function searchBooks() {
+    const searchBar = document.getElementById('search-bar');
+    const searchQuery = searchBar.value.toLowerCase();
+    const filteredBooks = books.filter(book => book.name.toLowerCase().includes(searchQuery));
+    displayBooks(filteredBooks);
+}
+
+document.getElementById('search-bar').addEventListener('input', searchBooks);
+
+document.addEventListener('DOMContentLoaded', () => displayBooks(books));
