@@ -43,6 +43,12 @@ main {
     transform: scale(1.05);
 }
 
+.card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
 .card h2 {
     font-size: 1.2em;
     margin: 0 0 10px;
@@ -102,11 +108,6 @@ button:hover {
     max-width: 500px;
     text-align: center;
     border-radius: 10px;
-}
-
-.modal-content img {
-    max-width: 100%;
-    height: auto;
 }
 
 .close {
